@@ -9,7 +9,7 @@ import java.util.*;
 
 public class SodokuValidator
 {
-    public GridState isValid(Grid grid) throws GridExceptions
+    public void isValid(Grid grid) throws GridExceptions
     {
 
         List<InvalidFieldError> errors = new LinkedList<InvalidFieldError>();
@@ -24,24 +24,23 @@ public class SodokuValidator
             throw new GridExceptions(errors);
         }
 
-        GridState state = getGridState(grid);
-        return state;
+       getGridState(grid);
     }
 
-    private GridState getGridState(Grid grid)
+    private void getGridState(Grid grid)
     {
 
         for (int i = 0; i < grid.getFields().length; i++)
         {
             for (int j = 0; j < grid.getFields().length; j++)
             {
-                if (grid.getFields()[i][j] == null)
+                if (grid.getFields()[i][j].getValue() == 0)
                 {
-                    return GridState.initialized;
+                    grid.setGridState(GridState.initialized);
                 }
             }
         }
-        return GridState.completed;
+        grid.setGridState(GridState.completed);
     }
 
     private void validateDigits(Grid grid, List<InvalidFieldError> errors)
@@ -221,8 +220,6 @@ public class SodokuValidator
 
         return fields;
     }
-
-
     public Grid generateGrid()
     {
 
@@ -245,9 +242,9 @@ public class SodokuValidator
             for (int j = 0; j < intFields.length; j++)
             {
                 if (intFields[i][j] == 0)
-                    fields[i][j] = new Field(intFields[i][j], FieldState.composed);
+                    fields[i][j] = new Field(intFields[i][j], FieldState.composed,i,j);
                 else
-                    fields[i][j] = new Field(intFields[i][j], FieldState.generated);
+                    fields[i][j] = new Field(intFields[i][j], FieldState.generated,i,j);
             }
         }
         return fields;

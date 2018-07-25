@@ -11,11 +11,15 @@ public class Field
 {
     private Integer value;
     private FieldState state;
+    private Integer row;
+    private Integer col;
 
-    public Field(Integer aInValue,FieldState aInState)
+    public Field(Integer aInValue,FieldState aInState,Integer aInRow,Integer aInCol)
     {
         value=aInValue;
         state=aInState;
+        row=aInRow;
+        col=aInRow;
     }
 
     public Integer getValue()
@@ -53,7 +57,8 @@ public class Field
 
         Field field = (Field) o;
 
-        return value.equals(field.value);
+        return value.equals(field.value) && row.equals(field.row)
+                && col.equals(field.col) && state.equals(field.state);
     }
 
     @Override

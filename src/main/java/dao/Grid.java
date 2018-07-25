@@ -19,14 +19,17 @@ public class Grid
     @NotNull
     private ZonedDateTime zonedDateTime;
     private GridState gridState;
+    private int numberOfGeneratedFields=0;
 
 
 
     public Grid(Field[][] aInFields,String aInId,ZonedDateTime aInZonedDateTime)
     {
+        gridState=GridState.undefined;
         fields=aInFields;
         id=aInId;
         zonedDateTime = aInZonedDateTime;
+
 
     }
 
@@ -36,25 +39,37 @@ public class Grid
         return fields;
     }
 
-    public void printGrid()
+    public String toString()
     {
-
+        String str="";
         for (int row = 0; row < fields.length; row++)
         {
 
             for (int col = 0; col < fields.length; col++)
             {
-                System.out.printf(String.valueOf(fields[row][col]) + " ");
+                str=str+(String.valueOf(fields[row][col]) + " ");
                 if (col == 2 || col == 5)
-                    System.out.printf("| ");
+                    str=str+("| ");
 
             }
 
-            System.out.printf("\n");
+            str=str+("\n");
             if (row == 2 || row == 5)
-                System.out.println("- - - - - - - - - - -");
+                str=str+("- - - - - - - - - - -\n");
 
         }
+        return str;
     }
 
+    public GridState getGridState()
+    {
+
+        return gridState;
+    }
+
+    public void setGridState(GridState gridState)
+    {
+
+        this.gridState = gridState;
+    }
 }

@@ -1,5 +1,7 @@
+import business.GridExceptions;
 import business.SodokuValidator;
 import dao.Grid;
+import dao.GridState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +15,13 @@ import static junit.framework.TestCase.assertTrue;
 @ContextConfiguration(classes = {GridTest.class})
 public class GridTest
 {
-    Grid grid;
+    private Grid grid;
+    private SodokuValidator sodokuValidator;
     @Before
     public void init()
     {
 
-        SodokuValidator sodokuValidator = new SodokuValidator();
+         sodokuValidator = new SodokuValidator();
          grid = sodokuValidator.generateGrid();
     }
 
@@ -26,5 +29,21 @@ public class GridTest
     public void testGridNotNull()
     {
         assertNotNull(grid);
+        assertTrue(grid.getGridState()==GridState.undefined);
+        System.out.println(grid);
+    }
+    @Test
+    public void testGridIsValid()
+    {
+
+        try
+        {
+            sodokuValidator.isValid(grid);
+            assertTrue(grid.getGridState()== GridState.initialized);
+        }
+        catch (GridExceptions gridExceptions)
+        {
+            gridExceptions.printStackTrace();
+        }
     }
 }
